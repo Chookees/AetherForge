@@ -1,0 +1,25 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Asp.Versioning.Http" Version="10.2.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="10.0.10" />
+    <PackageReference Include="Microsoft.OpenApi" Version="2.11.0" />
+    <PackageReference Include="Serilog.AspNetCore" Version="10.0.0" />
+    <PackageReference Include="SQLitePCLRaw.bundle_e_sqlite3" Version="2.1.12" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AomrModEditor.Api.Contracts\AomrModEditor.Api.Contracts.csproj" />
+    <ProjectReference Include="..\AomrModEditor.Application\AomrModEditor.Application.csproj" />
+    <ProjectReference Include="..\AomrModEditor.GameData\AomrModEditor.GameData.csproj" />
+    <ProjectReference Include="..\AomrModEditor.ModGeneration\AomrModEditor.ModGeneration.csproj" />
+    <ProjectReference Include="..\AomrModEditor.Persistence\AomrModEditor.Persistence.csproj" />
+  </ItemGroup>
+
+</Project>

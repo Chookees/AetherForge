@@ -1,0 +1,22 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\AomrModEditor.Application\AomrModEditor.Application.csproj" />
+    <ProjectReference Include="..\AomrModEditor.GameData\AomrModEditor.GameData.csproj" />
+    <ProjectReference Include="..\AomrModEditor.ModGeneration\AomrModEditor.ModGeneration.csproj" />
+    <ProjectReference Include="..\AomrModEditor.Persistence\AomrModEditor.Persistence.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.10" />
+    <PackageReference Include="System.CommandLine" Version="2.0.10" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+</Project>

@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <IsPackable>false</IsPackable>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" Version="6.0.4" />
+    <PackageReference Include="FluentAssertions" Version="8.10.0" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="10.0.10" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
+    <PackageReference Include="Verify.Xunit" Version="31.12.5" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.4" />
+  </ItemGroup>
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\AomrModEditor.Domain\AomrModEditor.Domain.csproj" />
+    <ProjectReference Include="..\..\src\AomrModEditor.Application\AomrModEditor.Application.csproj" />
+    <ProjectReference Include="..\..\src\AomrModEditor.GameData\AomrModEditor.GameData.csproj" />
+    <ProjectReference Include="..\..\src\AomrModEditor.ModGeneration\AomrModEditor.ModGeneration.csproj" />
+    <ProjectReference Include="..\..\src\AomrModEditor.Persistence\AomrModEditor.Persistence.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\fixtures\synthetic\**\*" Link="fixtures\synthetic\%(RecursiveDir)%(Filename)%(Extension)" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

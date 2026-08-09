@@ -1,0 +1,47 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\AomrModEditor.Api.Client\AomrModEditor.Api.Client.csproj" />
+    <ProjectReference Include="..\AomrModEditor.Api.Contracts\AomrModEditor.Api.Contracts.csproj" />
+    <ProjectReference Include="..\AomrModEditor.Api\AomrModEditor.Api.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Avalonia" Version="11.3.2" />
+    <PackageReference Include="Avalonia.Desktop" Version="11.3.2" />
+    <PackageReference Include="Avalonia.Themes.Fluent" Version="11.3.2" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.4.0" />
+    <PackageReference Include="Tmds.DBus.Protocol" Version="0.94.2" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <BuiltInComInteropSupport>true</BuiltInComInteropSupport>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <ExtractGameplayDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\..\aomr_extract\original'))</ExtractGameplayDir>
+    <FixtureGameplayDir>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\..\fixtures\synthetic'))</FixtureGameplayDir>
+    <EmbeddedPackOut>$(MSBuildThisFileDirectory)Resources\EmbeddedGameplayPack.json.gz</EmbeddedPackOut>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <AvaloniaResource Include="Assets\aether-forge-icon.png" />
+    <EmbeddedResource Include="Resources\EmbeddedGameplayPack.json.gz" LogicalName="AomrModEditor.App.EmbeddedGameplayPack.json.gz" Condition="Exists('Resources\EmbeddedGameplayPack.json.gz')" />
+    <None Include="Resources\EmbeddedGameplayPack.json.gz" CopyToOutputDirectory="PreserveNewest" Condition="Exists('Resources\EmbeddedGameplayPack.json.gz')" />
+  </ItemGroup>
+
+  <!-- Build-time pack: prefer local extract (not committed); else keep/generate from synthetic fixtures. -->
+  <Target Name="GenerateEmbeddedGameplayPack" BeforeTargets="BeforeBuild">
+    <PropertyGroup>
+      <_PackSource Condition="Exists('$(ExtractGameplayDir)\gameplay\proto.xml')">$(ExtractGameplayDir)</_PackSource>
+      <_PackSource Condition="'$(_PackSource)'==''">$(FixtureGameplayDir)</_PackSource>
+    </PropertyGroup>
+    <MakeDir Directories="$(MSBuildThisFileDirectory)Resources" />
+    <Exec Command="dotnet run --project &quot;$(MSBuildThisFileDirectory)..\..\tools\GameplayPackGen\GameplayPackGen.csproj&quot; -c $(Configuration) --no-launch-profile -- &quot;$(_PackSource)&quot; &quot;$(EmbeddedPackOut)&quot;"
+          IgnoreExitCode="false"
+          Condition="Exists('$(_PackSource)')" />
+  </Target>
+
+</Project>

@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Synthetic AoMR-style proto for tests only. Not retail game data. -->
+<Proto>
+  <Unit id="" name="VillagerGreek">
+    <displaynameid>STR_UNIT_VILLAGER_NAME</displaynameid>
+    <obstructionradiusx>0.4900</obstructionradiusx>
+    <obstructionradiusz>0.4900</obstructionradiusz>
+    <impacttype>Unarmoured</impacttype>
+    <unitaitype>Civilian</unitaitype>
+    <movementtype>land</movementtype>
+    <animfile culture="greek">greek\units\villager\villager.xml</animfile>
+    <icon>resources\greek\player_color\units\villager_icon.png</icon>
+    <initialhitpoints>55.0000</initialhitpoints>
+    <maxhitpoints>55.0000</maxhitpoints>
+    <trainpoints>17.0000</trainpoints>
+    <populationcount>1</populationcount>
+    <maxvelocity>3.8000</maxvelocity>
+    <cost resourcetype="Food">50.0000</cost>
+    <armor type="Hack" value="0.2500"></armor>
+    <armor type="Pierce" value="0.3500"></armor>
+    <armor type="Crush" value="0.9900"></armor>
+    <unittype>AbstractVillager</unittype>
+    <unittype>EconomicUnit</unittype>
+    <flag>AutoTrainable</flag>
+    <unknown_future_field synthetic="true">keep-me</unknown_future_field>
+    <protoaction>
+      <name>Hunting</name>
+      <rate type="Huntable">1.000000</rate>
+    </protoaction>
+    <protoaction>
+      <name>ChopAttack</name>
+      <damage type="Hack">8.000000</damage>
+    </protoaction>
+    <protoaction>
+      <name>RangedAttack</name>
+      <rof>2.000000</rof>
+      <damage type="Pierce">12.000000</damage>
+      <maxrange>12.000000</maxrange>
+    </protoaction>
+    <protoaction>
+      <name>Build</name>
+      <rate type="Building">1.000000</rate>
+    </protoaction>
+    <protoaction>
+      <name>Repair</name>
+      <rate type="Building">0.4000</rate>
+    </protoaction>
+    <protoaction>
+      <name>Gather</name>
+      <rate type="WoodResource">1.000000</rate>
+      <rate type="GoldResource">0.850000</rate>
+    </protoaction>
+    <protoaction>
+      <name>HandAttack</name>
+      <damage type="Hack">6.000000</damage>
+    </protoaction>
+  </Unit>
+  <Unit id="" name="Hoplite">
+    <displaynameid>STR_UNIT_HOPLITE_NAME</displaynameid>
+    <animfile culture="greek">greek\units\infantry\hoplite\hoplite.xml</animfile>
+    <icon>resources\greek\player_color\units\hoplite_icon.png</icon>
+    <maxhitpoints>115.0000</maxhitpoints>
+    <initialhitpoints>115.0000</initialhitpoints>
+    <cost resourcetype="Food">40.0000</cost>
+    <cost resourcetype="Gold">30.0000</cost>
+    <armor type="Hack" value="0.3000"></armor>
+    <armor type="Pierce" value="0.2000"></armor>
+    <armor type="Crush" value="0.9900"></armor>
+    <unittype>AbstractInfantry</unittype>
+    <unittype>MilitaryUnit</unittype>
+    <unittype>Unit</unittype>
+    <protoaction>
+      <name>HandAttack</name>
+      <rof>1.000000</rof>
+      <damage type="Hack">8.000000</damage>
+      <maxrange>0.750000</maxrange>
+    </protoaction>
+    <protoaction>
+      <name>RangedAttack</name>
+      <damage type="Pierce">5.000000</damage>
+    </protoaction>
+  </Unit>
+  <Unit id="" name="Toxotes">
+    <displaynameid>STR_UNIT_TOXOTES_NAME</displaynameid>
+    <icon>resources\greek\player_color\units\toxotes_icon.png</icon>
+    <animfile culture="greek">greek\units\archery\toxotes\toxotes.xml</animfile>
+    <turnrate>18.0000</turnrate>
+    <initialhitpoints>65.0000</initialhitpoints>
+    <maxhitpoints>65.0000</maxhitpoints>
+    <trainpoints>15.0000</trainpoints>
+    <populationcount>2</populationcount>
+    <maxvelocity>4.0000</maxvelocity>
+    <los>18.0000</los>
+    <cost resourcetype="Wood">55.0000</cost>
+    <cost resourcetype="Gold">35.0000</cost>
+    <armor type="Hack" value="0.1500"></armor>
+    <armor type="Pierce" value="0.1500"></armor>
+    <armor type="Crush" value="0.9900"></armor>
+    <unittype>MilitaryUnit</unittype>
+    <unittype>Unit</unittype>
+    <unittype>AbstractArcher</unittype>
+    <unittype>HumanSoldier</unittype>
+    <protoaction>
+      <name>RangedAttack</name>
+      <rof>1.000000</rof>
+      <damage type="Pierce">6.000000</damage>
+      <damagebonus type="AbstractInfantry">1.250000</damagebonus>
+      <maxrange>15.000000</maxrange>
+    </protoaction>
+  </Unit>
+  <Unit id="" name="Militia">
+    <displaynameid>STR_UNIT_MILITIA_NAME</displaynameid>
+    <maxhitpoints>80.0000</maxhitpoints>
+    <initialhitpoints>80.0000</initialhitpoints>
+    <unittype>MilitaryUnit</unittype>
+    <unittype>Unit</unittype>
+    <unittype>AbstractInfantry</unittype>
+  </Unit>
+  <Unit id="" name="Minotaur">
+    <displaynameid>STR_UNIT_MINOTAUR_NAME</displaynameid>
+    <maxhitpoints>480.0000</maxhitpoints>
+    <unittype>AbstractMythUnit</unittype>
+    <recharge>30.0000</recharge>
+    <specialattack>Gore</specialattack>
+    <protoaction>
+      <name>SpecialAttack</name>
+      <damage type="Hack">40.000000</damage>
+      <recharge>30.000000</recharge>
+    </protoaction>
+  </Unit>
+  <Unit id="" name="House">
+    <displaynameid>STR_BLD_HOUSE_NAME</displaynameid>
+    <icon>resources\shared\static_color\buildings\house_icon.png</icon>
+    <animfile culture="greek">greek\buildings\house\house.xml</animfile>
+    <animfile culture="egyptian">egyptian\buildings\house\house.xml</animfile>
+    <animfile culture="norse">norse\buildings\house\house.xml</animfile>
+    <partisantype>Militia</partisantype>
+    <partisancount>2</partisancount>
+    <initialhitpoints>450.0000</initialhitpoints>
+    <maxhitpoints>450.0000</maxhitpoints>
+    <buildpoints>15.0000</buildpoints>
+    <buildlimit>16</buildlimit>
+    <los>9.0000</los>
+    <cost resourcetype="Wood">50.0000</cost>
+    <armor type="Hack" value="0.4000"></armor>
+    <armor type="Pierce" value="0.9000"></armor>
+    <armor type="Crush" value="0.0500"></armor>
+    <unittype>Building</unittype>
+    <unittype>BuildingClass</unittype>
+  </Unit>
+  <Unit id="" name="BerryBush">
+    <displaynameid>STR_RESOURCE_BERRYBUSH_NAME</displaynameid>
+    <unittype>AbstractFarm</unittype>
+    <initialresource resourcetype="Food">150.0000</initialresource>
+  </Unit>
+  <Unit id="" name="MineGoldSmall">
+    <displaynameid>STR_RESOURCE_GOLDSMALL_NAME</displaynameid>
+    <unittype>AbstractMine</unittype>
+    <initialresource resourcetype="Gold">1000.0000</initialresource>
+  </Unit>
+</Proto>

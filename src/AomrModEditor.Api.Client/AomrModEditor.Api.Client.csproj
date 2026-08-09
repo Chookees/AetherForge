@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <ItemGroup>
+    <ProjectReference Include="..\AomrModEditor.Api.Contracts\AomrModEditor.Api.Contracts.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="NSwag.MSBuild" Version="14.6.3" PrivateAssets="all" />
+  </ItemGroup>
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="openapi\v1.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="nswag.json" />
+  </ItemGroup>
+
+  <!-- LIM-01: regenerate typed client from OpenAPI; do not hand-edit Generated/*.g.cs -->
+  <Target Name="GenerateNSwagClient" BeforeTargets="BeforeCompile" Inputs="openapi\v1.json;nswag.json" Outputs="Generated\AomrGeneratedApiClient.g.cs">
+    <Exec Command="$(NSwagExe_Net80) run nswag.json" WorkingDirectory="$(MSBuildProjectDirectory)" ConsoleToMSBuild="true" LogStandardErrorAsError="true" />
+  </Target>
+
+</Project>

@@ -1,0 +1,6 @@
+@AomrModEditor.Api_HostAddress = http://localhost:5283
+
+GET {{AomrModEditor.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

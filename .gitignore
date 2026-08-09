@@ -1,0 +1,55 @@
+# Local agent runtime artifacts
+/inDev/
+
+# Build-generated embedded gameplay pack (regenerate from local extract; do not commit retail-derived blobs)
+src/AomrModEditor.App/Resources/EmbeddedGameplayPack.json.gz
+**/EmbeddedGameplayPack.json.gz
+
+# Local publish output
+/release/
+
+# Retail / extracted proprietary gameplay (never commit)
+/aomr_extract/original/
+**/aomr_extract/original/**
+
+# .NET / Visual Studio
+**/bin/
+**/obj/
+.vs/
+*.user
+*.suo
+*.userosscache
+*.sln.docstates
+[Bb]uild[Ll]og.*
+*.log
+
+# Test / coverage / verify
+**/TestResults/
+**/coverlet/
+*.received.*
+*.received/
+
+# Python tooling next to research notes
+**/__pycache__/
+*.py[cod]
+
+# OS / IDE noise
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.swp
+*~
+
+# Secrets / local env
+.env
+.env.*
+!.env.example
+appsettings.*.local.json
+*.pfx
+**/.cursor/
+**/aomr_extract/
+**/inDev/
+**/design/
+
+# Optional: keep Cursor agent config local (uncomment if you do not want it on GitHub)
+# /.cursor/

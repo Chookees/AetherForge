@@ -1,0 +1,570 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "AomrModEditor API",
+    "version": "v1"
+  },
+  "paths": {
+    "/health": {
+      "get": {
+        "operationId": "GetHealth",
+        "responses": { "200": { "description": "OK" } }
+      }
+    },
+    "/ready": {
+      "get": {
+        "operationId": "GetReady",
+        "responses": { "200": { "description": "OK" }, "503": { "description": "Not ready" } }
+      }
+    },
+    "/api/v1/sources/imports": {
+      "post": {
+        "operationId": "ImportSource",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ImportSourceRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Imported",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SourceSnapshotDto" }
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/OperationDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/sources/embedded": {
+      "post": {
+        "operationId": "LoadEmbeddedSource",
+        "responses": {
+          "200": {
+            "description": "Loaded embedded pack",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SourceSnapshotDto" }
+              }
+            }
+          },
+          "404": { "description": "Embedded pack unavailable" }
+        }
+      }
+    },
+    "/api/v1/entities": {
+      "get": {
+        "operationId": "GetEntities",
+        "parameters": [
+          { "name": "q", "in": "query", "schema": { "type": "string" } },
+          { "name": "category", "in": "query", "schema": { "type": "string" } },
+          { "name": "unitType", "in": "query", "schema": { "type": "string" } },
+          { "name": "take", "in": "query", "schema": { "type": "integer" } },
+          { "name": "includeTechnologies", "in": "query", "schema": { "type": "boolean", "default": false } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PagedEntitiesDto" }
+              }
+            }
+          },
+          "409": { "description": "Source not loaded" }
+        }
+      }
+    },
+    "/api/v1/entities/{id}": {
+      "get": {
+        "operationId": "GetEntity",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/EntityDetailDto" }
+              }
+            }
+          },
+          "409": { "description": "Source not loaded" }
+        }
+      }
+    },
+    "/api/v1/entities/{id}/editor-schema": {
+      "get": {
+        "operationId": "GetEditorSchema",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/EntityEditorSchemaDto" }
+              }
+            }
+          },
+          "409": { "description": "Source not loaded" }
+        }
+      }
+    },
+    "/api/v1/entities/{id}/effective-stats": {
+      "get": {
+        "operationId": "GetEffectiveStats",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/EffectiveStatsDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/god-powers/{id}/unified": {
+      "get": {
+        "operationId": "GetGodPowerUnified",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/GodPowerUnifiedDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/projects": {
+      "post": {
+        "operationId": "CreateProject",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateProjectRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ProjectDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/projects/current/changes": {
+      "post": {
+        "operationId": "ApplyChange",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ApplyChangeRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/ChangeDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/projects/current/diffs": {
+      "post": {
+        "operationId": "DiffEntity",
+        "parameters": [
+          { "name": "entityKey", "in": "query", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/DiffDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/projects/current/generations": {
+      "post": {
+        "operationId": "Generate",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/GenerationDto" }
+              }
+            }
+          },
+          "202": {
+            "description": "Accepted",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/OperationDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/projects/current/migrations/inspect": {
+      "get": {
+        "operationId": "InspectMigration",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/MigrationInspectDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/projects/current/migrations/rebase": {
+      "post": {
+        "operationId": "RebaseMigration",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/RebaseRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/RebaseResultDto" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/operations/{id}": {
+      "get": {
+        "operationId": "GetOperation",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string", "format": "uuid" } }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/OperationDto" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "ImportSourceRequest": {
+        "type": "object",
+        "properties": { "directoryPath": { "type": "string" } },
+        "required": ["directoryPath"]
+      },
+      "SourceSnapshotDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "rootPath": { "type": "string" },
+          "aggregateHash": { "type": "string" },
+          "entityCount": { "type": "integer" },
+          "importedAtUtc": { "type": "string", "format": "date-time" }
+        }
+      },
+      "PagedEntitiesDto": {
+        "type": "object",
+        "properties": {
+          "items": { "type": "array", "items": { "$ref": "#/components/schemas/EntitySummaryDto" } },
+          "nextCursor": { "type": ["string", "null"] }
+        }
+      },
+      "EntitySummaryDto": {
+        "type": "object",
+        "properties": {
+          "internalKey": { "type": "string" },
+          "category": { "type": "string" },
+          "sourceFile": { "type": "string" },
+          "displayNameId": { "type": ["string", "null"] },
+          "pantheon": { "type": ["string", "null"] },
+          "unitTypes": { "type": "array", "items": { "type": "string" } },
+          "iconPath": { "type": ["string", "null"] },
+          "exclusivePantheon": { "type": ["string", "null"] }
+        }
+      },
+      "EditorFieldDto": {
+        "type": "object",
+        "properties": {
+          "path": { "type": "string" },
+          "label": { "type": "string" },
+          "valueKind": { "type": "string" },
+          "currentValue": { "type": ["string", "null"] },
+          "matchAttributes": { "type": ["object", "null"], "additionalProperties": { "type": "string" } },
+          "elementName": { "type": ["string", "null"] },
+          "attributeName": { "type": ["string", "null"] },
+          "displayFormat": { "type": "string" },
+          "presence": { "type": "string" },
+          "groupKey": { "type": ["string", "null"] },
+          "options": { "type": ["array", "null"], "items": { "type": "string" } },
+          "persistHint": { "type": ["string", "null"] }
+        }
+      },
+      "EditorTabDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "title": { "type": "string" },
+          "fields": { "type": "array", "items": { "$ref": "#/components/schemas/EditorFieldDto" } }
+        }
+      },
+      "EntityEditorSchemaDto": {
+        "type": "object",
+        "properties": {
+          "entityKey": { "type": "string" },
+          "category": { "type": "string" },
+          "unitTypes": { "type": "array", "items": { "type": "string" } },
+          "iconPath": { "type": ["string", "null"] },
+          "tabs": { "type": "array", "items": { "$ref": "#/components/schemas/EditorTabDto" } }
+        }
+      },
+      "EntityDetailDto": {
+        "type": "object",
+        "properties": {
+          "summary": { "$ref": "#/components/schemas/EntitySummaryDto" },
+          "rawXml": { "type": "string" },
+          "provenance": { "type": "object", "additionalProperties": { "$ref": "#/components/schemas/FieldProvenanceDto" } },
+          "normalizedFields": { "type": "object", "additionalProperties": { "type": ["string", "null"] } }
+        }
+      },
+      "FieldProvenanceDto": {
+        "type": "object",
+        "properties": {
+          "kind": { "type": "string" },
+          "sourceFile": { "type": "string" },
+          "fieldPath": { "type": ["string", "null"] },
+          "baseValue": { "type": ["string", "null"] },
+          "overrideValue": { "type": ["string", "null"] },
+          "effectiveValue": { "type": ["string", "null"] }
+        }
+      },
+      "CreateProjectRequest": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "directory": { "type": "string" }
+        },
+        "required": ["name", "directory"]
+      },
+      "ProjectDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "name": { "type": "string" },
+          "directory": { "type": "string" },
+          "sourceSnapshotId": { "type": "string", "format": "uuid" },
+          "sourceFingerprintHash": { "type": "string" },
+          "version": { "type": "integer" }
+        }
+      },
+      "ApplyChangeRequest": {
+        "type": "object",
+        "properties": {
+          "entityKey": { "type": "string" },
+          "opType": { "type": "string" },
+          "elementName": { "type": ["string", "null"] },
+          "actionName": { "type": ["string", "null"] },
+          "childElementName": { "type": ["string", "null"] },
+          "newValue": { "type": "string" },
+          "attributeName": { "type": ["string", "null"] },
+          "attributes": { "type": ["object", "null"], "additionalProperties": { "type": "string" } }
+        }
+      },
+      "GodPowerUnifiedDto": {
+        "type": "object",
+        "properties": {
+          "powerKey": { "type": "string" },
+          "behavior": { "type": ["string", "null"] },
+          "damage": { "type": ["string", "null"] },
+          "cooldownTechKey": { "type": ["string", "null"] },
+          "cooldown": { "type": ["string", "null"] },
+          "costFavor": { "type": ["string", "null"] },
+          "behaviorSourceFile": { "type": "string" },
+          "cooldownSourceFile": { "type": ["string", "null"] }
+        }
+      },
+      "ChangeDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "entityKey": { "type": "string" },
+          "opType": { "type": "string" },
+          "createdAtUtc": { "type": "string", "format": "date-time" }
+        }
+      },
+      "DiffDto": {
+        "type": "object",
+        "properties": {
+          "semantic": { "type": "array", "items": { "$ref": "#/components/schemas/SemanticDiffEntryDto" } },
+          "rawBefore": { "type": "string" },
+          "rawAfter": { "type": "string" }
+        }
+      },
+      "SemanticDiffEntryDto": {
+        "type": "object",
+        "properties": {
+          "entityKey": { "type": "string" },
+          "path": { "type": "string" },
+          "oldValue": { "type": ["string", "null"] },
+          "newValue": { "type": ["string", "null"] }
+        }
+      },
+      "GenerationDto": {
+        "type": "object",
+        "properties": {
+          "stagingDirectory": { "type": "string" },
+          "generatedFiles": { "type": "array", "items": { "type": "string" } },
+          "protoModsXml": { "type": "string" },
+          "techtreeModsXml": { "type": "string" },
+          "issues": { "type": "array", "items": { "$ref": "#/components/schemas/ValidationIssueDto" } },
+          "godPowerStrategies": { "type": "array", "items": { "$ref": "#/components/schemas/GodPowerStrategyDto" } }
+        }
+      },
+      "ValidationIssueDto": {
+        "type": "object",
+        "properties": {
+          "severity": { "type": "string" },
+          "code": { "type": "string" },
+          "message": { "type": "string" },
+          "entityKey": { "type": ["string", "null"] }
+        }
+      },
+      "GodPowerStrategyDto": {
+        "type": "object",
+        "properties": {
+          "entityKey": { "type": "string" },
+          "strategy": { "type": "string" },
+          "reason": { "type": "string" },
+          "outputFile": { "type": ["string", "null"] }
+        }
+      },
+      "OperationDto": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string", "format": "uuid" },
+          "kind": { "type": "string" },
+          "state": { "type": "string" },
+          "progressPercent": { "type": "integer" },
+          "phase": { "type": ["string", "null"] },
+          "warnings": { "type": "array", "items": { "type": "string" } },
+          "errors": { "type": "array", "items": { "type": "string" } },
+          "createdAtUtc": { "type": "string", "format": "date-time" },
+          "completedAtUtc": { "type": ["string", "null"], "format": "date-time" },
+          "resultLink": { "type": ["string", "null"] }
+        }
+      },
+      "EffectiveStatsDto": {
+        "type": "object",
+        "properties": {
+          "entityKey": { "type": "string" },
+          "effective": { "type": "object", "additionalProperties": { "type": ["string", "null"] } },
+          "steps": { "type": "array", "items": { "$ref": "#/components/schemas/EffectiveStatStepDto" } },
+          "unsupportedWarnings": { "type": "array", "items": { "type": "string" } }
+        }
+      },
+      "EffectiveStatStepDto": {
+        "type": "object",
+        "properties": {
+          "step": { "type": "string" },
+          "field": { "type": "string" },
+          "value": { "type": ["string", "null"] },
+          "source": { "type": ["string", "null"] },
+          "unsupported": { "type": "boolean" },
+          "warning": { "type": ["string", "null"] }
+        }
+      },
+      "MigrationInspectDto": {
+        "type": "object",
+        "properties": {
+          "expectedFingerprint": { "type": "string" },
+          "actualFingerprint": { "type": "string" },
+          "requiresMigration": { "type": "boolean" },
+          "matchedEntityKeys": { "type": "array", "items": { "type": "string" } },
+          "missingInNewSource": { "type": "array", "items": { "type": "string" } },
+          "addedInNewSource": { "type": "array", "items": { "type": "string" } },
+          "fuzzySuggestions": { "type": "array", "items": { "$ref": "#/components/schemas/FuzzySuggestionDto" } }
+        }
+      },
+      "FuzzySuggestionDto": {
+        "type": "object",
+        "properties": {
+          "changeEntityKey": { "type": "string" },
+          "suggestedKey": { "type": "string" },
+          "score": { "type": "number" }
+        }
+      },
+      "RebaseRequest": {
+        "type": "object",
+        "properties": { "applyFuzzyBinds": { "type": "boolean" } }
+      },
+      "RebaseResultDto": {
+        "type": "object",
+        "properties": {
+          "rebasedCount": { "type": "integer" },
+          "droppedCount": { "type": "integer" },
+          "unresolvedFuzzyCount": { "type": "integer" },
+          "newFingerprintHash": { "type": "string" },
+          "reportMarkdown": { "type": "string" }
+        }
+      }
+    }
+  }
+}

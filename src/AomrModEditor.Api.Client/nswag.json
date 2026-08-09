@@ -1,0 +1,25 @@
+{
+  "runtime": "Net80",
+  "documentGenerator": {
+    "fromDocument": {
+      "json": "",
+      "url": "openapi/v1.json"
+    }
+  },
+  "codeGenerators": {
+    "openApiToCSharpClient": {
+      "className": "AomrGeneratedApiClient",
+      "namespace": "AomrModEditor.Api.Client.Generated",
+      "output": "Generated/AomrGeneratedApiClient.g.cs",
+      "generateClientClasses": true,
+      "generateDtoTypes": true,
+      "injectHttpClient": true,
+      "useBaseUrl": true,
+      "generateOptionalParameters": true,
+      "dateType": "System.DateTimeOffset",
+      "jsonLibrary": "SystemTextJson",
+      "generateExceptionClasses": true,
+      "exceptionClass": "AomrApiException"
+    }
+  }
+}

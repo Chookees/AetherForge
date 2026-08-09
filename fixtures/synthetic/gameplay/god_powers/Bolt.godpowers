@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Synthetic AoMR-style god power for tests only. Not retail game data. -->
+<GodPowers>
+  <GodPower name="Bolt">
+    <displaynameid>STR_GP_BOLT_NAME</displaynameid>
+    <god>Zeus</god>
+    <pantheon>Greek</pantheon>
+    <age>1</age>
+    <behavior>StrikeSingleTarget</behavior>
+    <damage type="Divine">1000.0000</damage>
+    <proto>ProjectileBolt</proto>
+    <unknown_gp_flag experimental="1">keep</unknown_gp_flag>
+  </GodPower>
+</GodPowers>
