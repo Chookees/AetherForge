@@ -12,5 +12,7 @@ jobs:
       - uses: actions/setup-dotnet@v4
         with:
           dotnet-version: "10.0.x"
+      - name: Build solution
+        run: dotnet build AomrModEditor.sln
       - name: Run automated tests
-        run: dotnet test AomrModEditor.sln
+        run: dotnet test AomrModEditor.sln --no-build

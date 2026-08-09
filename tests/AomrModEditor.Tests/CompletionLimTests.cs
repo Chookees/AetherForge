@@ -98,10 +98,12 @@ public class CompletionLimTests
     [Fact]
     public async Task LIM08_cli_search_runs_with_exit_zero()
     {
+        // Cli is a ProjectReference of the test project, so it is built for the same configuration.
+        var configuration = new DirectoryInfo(AppContext.BaseDirectory).Parent!.Name;
         var dll = Path.GetFullPath(Path.Combine(
             AppContext.BaseDirectory, "..", "..", "..", "..", "..",
-            "src", "AomrModEditor.Cli", "bin", "Debug", "net10.0", "AomrModEditor.Cli.dll"));
-        File.Exists(dll).Should().BeTrue();
+            "src", "AomrModEditor.Cli", "bin", configuration, "net10.0", "AomrModEditor.Cli.dll"));
+        File.Exists(dll).Should().BeTrue($"CLI must be built as a test ProjectReference (looked for {dll})");
         var psi = new ProcessStartInfo("dotnet")
         {
             RedirectStandardOutput = true,
@@ -120,10 +122,10 @@ public class CompletionLimTests
         var stderrTask = p.StandardError.ReadToEndAsync();
         var completed = p.WaitForExit(60000);
         completed.Should().BeTrue("CLI search should exit");
-        p.ExitCode.Should().Be(0);
+        var stderr = await stderrTask;
+        p.ExitCode.Should().Be(0, "stderr: " + stderr);
         var output = await stdoutTask;
         output.Should().Contain("VillagerGreek");
-        _ = await stderrTask;
     }
 
     [Fact]
@@ -214,3 +216,4 @@ public class CompletionLimTests
         stats.Steps.Should().NotBeEmpty();
     }
 }
+
