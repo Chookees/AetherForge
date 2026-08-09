@@ -1,73 +1,109 @@
 # Aether Forge
 
-**Lokaler Mod-Editor für [Age of Mythology: Retold](https://www.ageofempires.com/games/age-of-mythology-retold/)**
+**Local mod editor for [Age of Mythology: Retold](https://www.ageofempires.com/games/age-of-mythology-retold/)**
 
-Aether Forge ist ein API-first Desktop-Tool zum Lesen, Bearbeiten und Veröffentlichen von **additiven Gameplay-Mods**. Du änderst Einheiten, Gebäude und verwandte Daten über eine schema-getriebene Oberfläche — ohne Retail-Dateien zu überschreiben und ohne Speicher- oder Multiplayer-Manipulation.
+Aether Forge is an API-first desktop tool for reading, editing, and shipping **additive gameplay mods**. Change units, buildings, and related data through a schema-driven UI — without overwriting retail files and without memory or multiplayer manipulation.
 
-Die Anwendung erzeugt gültige Local-Mods im Retold-Format (`proto_mods.xml` mit `mergeMode="replace"`) und kann sie direkt in den lokalen Mods-Ordner installieren.
+The app produces valid Retold local mods (`proto_mods.xml` with `mergeMode="replace"`) and can install them directly into your local mods folder.
+
+<p align="center">
+  <img src="docs/images/Home.jpg" alt="Aether Forge home screen" width="800" />
+</p>
 
 ---
 
 ## Features
 
-- **Entity Browser** — durchsuchbare, gruppierbare Übersicht über Units, Buildings und weitere Entitäten
-- **Schema-getriebener Editor** — Tabs u. a. für Stats, Armor (%), Costs, Attack, Work; nur vorhandene Werte editierbar
-- **Lossless XML** — unbekannte Felder bleiben erhalten; Diffs sind minimal und additiv
-- **Mod-Generierung** — Ausgabe als `ModName/game/data/gameplay/proto_mods.xml`
-- **Generate + Install** — schreibt direkt unter `%USERPROFILE%\Games\Age of Mythology Retold\<SteamID64>\mods\local`
-- **Auto-Discovery** — erkennt den Local-Mods-Pfad beim Start (Steam-Account-abhängig)
-- **Embedded Gameplay Pack** — beim Build aus lokalem Extract oder synthetischen Fixtures; Retail-XML wird **nicht** committed
-- **API-first** — Avalonia-GUI spricht ausschließlich die lokale REST-API an (Loopback + Ephemeral Token)
-- **Standalone Backend** — optional als reine API (`Backend+API.exe`) für externe Clients / Automatisierung
+- **Entity Browser** — searchable, grouped overview of units, buildings, and other entities
+- **Schema-driven editor** — tabs for Stats, Armor (%), Costs, Attack, Work, and more; only existing values are editable
+- **Lossless XML** — unknown fields are preserved; diffs stay minimal and additive
+- **Mod generation** — output as `ModName/game/data/gameplay/proto_mods.xml`
+- **Generate + Install** — writes under `%USERPROFILE%\Games\Age of Mythology Retold\<SteamID64>\mods\local`
+- **Auto-discovery** — detects the local mods path on startup (Steam-account dependent)
+- **Embedded gameplay pack** — built from a local extract or synthetic fixtures; retail XML is **not** committed
+- **API-first** — the Avalonia GUI talks only to the local REST API (loopback + ephemeral token)
+- **Standalone backend** — optional API-only binary (`Backend+API.exe`) for external clients / automation
 
 ---
 
-## Screenshots / Workflow
+## Screenshots
+
+### Home
+
+<img src="docs/images/Home.jpg" alt="Home" width="800" />
+
+### Setup
+
+Configure local mods and optional import folder. Auto-discovery runs on startup.
+
+<img src="docs/images/Setup.jpg" alt="Setup" width="800" />
+
+### Entity Browser
+
+Search and browse entities by group. Double-click or press Enter to open the editor.
+
+<img src="docs/images/EntityBrowser.jpg" alt="Entity Browser" width="800" />
+
+### Unit Editor
+
+Schema-driven tabs for stats, armor, costs, attack, and work.
+
+<img src="docs/images/UnitEditor.jpg" alt="Unit Editor" width="800" />
+
+### Unit Editor — Villager example
+
+Editing a villager with live fields from the gameplay pack.
+
+<img src="docs/images/UnitEditor_Villager.jpg" alt="Unit Editor — Villager" width="800" />
+
+---
+
+## Workflow
 
 ```text
 Setup  →  Entity Browser  →  Unit/Building Editor  →  Generation  →  Local Mod
 ```
 
-1. Optional eigenen Gameplay-Ordner importieren (sonst eingebettetes Pack)
-2. Entität suchen und per Doppelklick / Enter öffnen
-3. Werte anpassen (nur geänderte Leaves landen im Mod)
-4. Mod-Namen wählen → **Generate** oder **Generate + Install**
+1. Optionally import your own gameplay folder (otherwise the embedded pack is used)
+2. Search for an entity and open it with double-click / Enter
+3. Adjust values (only changed leaves end up in the mod)
+4. Choose a mod name → **Generate** or **Generate + Install**
 
 ---
 
-## Anforderungen
+## Requirements
 
 | | |
 |---|---|
 | OS | Windows 10/11 (x64) |
-| Runtime | Self-contained Release: **kein** separates .NET nötig |
-| Entwickeln | [.NET 10 SDK](https://dotnet.microsoft.com/download) |
-| Spiel | Age of Mythology: Retold (für Local-Mod-Installation) |
+| Runtime | Self-contained release: **no** separate .NET install required |
+| Development | [.NET 10 SDK](https://dotnet.microsoft.com/download) |
+| Game | Age of Mythology: Retold (for local mod install) |
 
 ---
 
-## Schnellstart (Release-Binaries)
+## Quick start (release binaries)
 
-Aus dem Repo:
+From the repo root:
 
 ```powershell
 .\build\publish-release.ps1
 ```
 
-Ergebnis in `release\`:
+Output in `release\`:
 
-| Datei | Zweck |
-|-------|--------|
-| `GUI.exe` | Desktop-App (empfohlen) — startet eingebettete Local-API |
-| `Backend+API.exe` | Nur REST-API / Backend |
+| File | Purpose |
+|------|---------|
+| `GUI.exe` | Desktop app (recommended) — starts the embedded local API |
+| `Backend+API.exe` | REST API / backend only |
 
 Details: [`build/README.md`](build/README.md)
 
-> **Hinweis:** `release/` und das eingebettete Pack sind gitignored. Pack wird beim Build aus `aomr_extract/original` (falls vorhanden) oder `fixtures/synthetic` erzeugt.
+> **Note:** `release/` and the embedded pack are gitignored. The pack is produced at build time from `aomr_extract/original` (if present) or `fixtures/synthetic`.
 
 ---
 
-## Entwickeln
+## Development
 
 ```powershell
 # Build
@@ -76,27 +112,27 @@ dotnet build AomrModEditor.sln
 # Tests
 dotnet test AomrModEditor.sln
 
-# GUI starten
+# Run GUI
 dotnet run --project src/AomrModEditor.App
 
-# API allein
+# Run API only
 dotnet run --project src/AomrModEditor.Api
 ```
 
-Weitere Hinweise: [`docs/SETUP.md`](docs/SETUP.md)
+More notes: [`docs/SETUP.md`](docs/SETUP.md)
 
-### Eingebettetes Gameplay-Pack
+### Embedded gameplay pack
 
-Beim Build der App:
+When building the app:
 
-1. Wenn `aomr_extract/original/gameplay/proto.xml` existiert → Pack daraus
-2. Sonst → synthetische Fixtures unter `fixtures/synthetic`
+1. If `aomr_extract/original/gameplay/proto.xml` exists → pack from that extract
+2. Otherwise → synthetic fixtures under `fixtures/synthetic`
 
-Das Pack (`EmbeddedGameplayPack.json.gz`) wird **nicht** versioniert — siehe `.gitignore`.
+The pack (`EmbeddedGameplayPack.json.gz`) is **not** versioned — see `.gitignore`.
 
 ---
 
-## Architektur
+## Architecture
 
 ```text
 ┌─────────────────┐     REST (loopback)     ┌──────────────────┐
@@ -110,28 +146,28 @@ Das Pack (`EmbeddedGameplayPack.json.gz`) wird **nicht** versioniert — siehe `
              (Use Cases)                    Persistence         (additive mods)
 ```
 
-| Projekt | Rolle |
-|---------|--------|
-| `AomrModEditor.App` | Avalonia-Desktop-UI |
-| `AomrModEditor.Api` | REST-API (auch embedded) |
-| `AomrModEditor.Api.Client` | Typisierter HTTP-Client |
-| `AomrModEditor.Api.Contracts` | DTOs / Verträge |
-| `AomrModEditor.Application` | Use Cases, Schema, Klassifikation |
-| `AomrModEditor.Domain` | Domänenmodell |
-| `AomrModEditor.GameData` | Installation Discovery, Import |
-| `AomrModEditor.ModGeneration` | Diff → `proto_mods.xml`, Installer |
-| `AomrModEditor.Persistence` | SQLite / lokale State |
-| `AomrModEditor.Cli` | Kommandozeile |
+| Project | Role |
+|---------|------|
+| `AomrModEditor.App` | Avalonia desktop UI |
+| `AomrModEditor.Api` | REST API (also embedded) |
+| `AomrModEditor.Api.Client` | Typed HTTP client |
+| `AomrModEditor.Api.Contracts` | DTOs / contracts |
+| `AomrModEditor.Application` | Use cases, schema, classification |
+| `AomrModEditor.Domain` | Domain model |
+| `AomrModEditor.GameData` | Installation discovery, import |
+| `AomrModEditor.ModGeneration` | Diff → `proto_mods.xml`, installer |
+| `AomrModEditor.Persistence` | SQLite / local state |
+| `AomrModEditor.Cli` | Command line |
 
 Stack: **C# / .NET 10**, ASP.NET Core, Avalonia 11, SQLite, System.Xml.Linq, xUnit.
 
-Design-Notizen: [`design/aether_forge/DESIGN.md`](design/aether_forge/DESIGN.md)
+Design notes: [`design/aether_forge/DESIGN.md`](design/aether_forge/DESIGN.md)
 
 ---
 
-## Mod-Ausgabe
+## Mod output
 
-Beispiel-Layout:
+Example layout:
 
 ```text
 MyCoolMod/
@@ -141,68 +177,69 @@ MyCoolMod/
         proto_mods.xml
 ```
 
-Geänderte XML-Leaves erhalten `mergeMode="replace"`, analog zu gängigen Retold-Local-Mods. Es werden **nur** Differenzen geschrieben — kein Full-Replace der Basisdaten.
+Changed XML leaves get `mergeMode="replace"`, matching common Retold local mods. Only diffs are written — no full replace of base data.
 
 ---
 
-## Was dieses Tool **nicht** macht
+## What this tool does **not** do
 
-- Keine Manipulation von laufenden Prozessen, Speicher oder Anti-Cheat
-- Kein Eingriff in Multiplayer-Traffic oder Executables
-- Kein Bundling / Commit von proprietären Retail-Gameplay-XMLs
-- Kein „Cheat Injector“ — nur Editor + additive Mod-Pakete
+- No manipulation of running processes, memory, or anti-cheat
+- No interference with multiplayer traffic or executables
+- No bundling / committing of proprietary retail gameplay XML
+- Not a “cheat injector” — editor + additive mod packages only
 
 ---
 
-## Wichtige Hinweise vor dem Push zu GitHub
+## Before pushing to GitHub
 
-**Nicht committen:**
+**Do not commit:**
 
-- `aomr_extract/original/` — extrahierte Retail-Gameplay-Daten
-- `src/.../EmbeddedGameplayPack.json.gz` — aus Retail abgeleitet
-- `release/` — lokale Publish-Ausgaben
+- `aomr_extract/original/` — extracted retail gameplay data
+- `src/.../EmbeddedGameplayPack.json.gz` — derived from retail / local extract
+- `release/` — local publish output
 - `bin/`, `obj/`, `.vs/`, `__pycache__/`
 
-Die Research-Markdowns unter `aomr_extract/*.md` und synthetische Fixtures sind fürs Repo gedacht; die Original-XML-Extrakte bleiben lokal.
+Research markdown under `aomr_extract/*.md` and synthetic fixtures are intended for the repo; original XML extracts stay local.
 
 ---
 
-## Lizenz & Spielinhalte
+## License & game content
 
-Dieses Repository enthält **keinen** offiziellen Age-of-Mythology-Inhalt von Microsoft / World's Edge / Xbox Game Studios.
+This repository does **not** include official Age of Mythology content from Microsoft / World's Edge / Xbox Game Studios.
 
-Du brauchst eine legale Kopie von AoM: Retold, um:
+You need a legal copy of AoM: Retold to:
 
-- Gameplay-Daten für ein vollständiges Pack zu extrahieren, und
-- Mods in den Local-Mods-Ordner zu installieren und im Spiel zu testen.
+- extract gameplay data for a full pack, and
+- install mods into the local mods folder and test in-game.
 
-„Age of Mythology“ und zugehörige Marken gehören ihren jeweiligen Rechteinhabern. Dieses Projekt ist ein **unoffizielles Fan-/Community-Tool**.
-
----
-
-## Mitwirken
-
-1. Fork / Branch
-2. `dotnet test AomrModEditor.sln` grün halten
-3. Keine Retail-XMLs oder generierten Pack-Blobs einchecken
-4. PR mit kurzer Beschreibung der Änderung
-
-CI: [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (`dotnet test` auf `windows-latest`).
+“Age of Mythology” and related trademarks belong to their respective owners. This project is an **unofficial fan / community tool**.
 
 ---
 
-## Dokumentation im Repo
+## Contributing
 
-| Pfad | Inhalt |
-|------|--------|
-| [`docs/SETUP.md`](docs/SETUP.md) | Setup & sicherer Workflow |
-| [`build/README.md`](build/README.md) | Release-Publish |
-| [`aomr_extract/`](aomr_extract/) | Research / Mod-Guide (ohne `original/`) |
-| [`design/`](design/) | UI-/Produkt-Design |
-| [`fixtures/synthetic/`](fixtures/synthetic/) | Synthetische Testdaten |
+1. Fork / branch
+2. Keep `dotnet test AomrModEditor.sln` green
+3. Do not check in retail XMLs or generated pack blobs
+4. Open a PR with a short description of the change
+
+CI: [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (`dotnet test` on `windows-latest`).
+
+---
+
+## Documentation in this repo
+
+| Path | Contents |
+|------|----------|
+| [`docs/SETUP.md`](docs/SETUP.md) | Setup & safe workflow |
+| [`docs/images/`](docs/images/) | Screenshots |
+| [`build/README.md`](build/README.md) | Release publish |
+| [`aomr_extract/`](aomr_extract/) | Research / mod guide (without `original/`) |
+| [`design/`](design/) | UI / product design |
+| [`fixtures/synthetic/`](fixtures/synthetic/) | Synthetic test data |
 
 ---
 
 ## Credits
 
-Gebaut für die AoM: Retold Modding-Community — API-first, local-first, additive Mods first.
+Built for the AoM: Retold modding community — API-first, local-first, additive mods first.
