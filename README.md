@@ -161,8 +161,6 @@ The pack (`EmbeddedGameplayPack.json.gz`) is **not** versioned — see `.gitigno
 
 Stack: **C# / .NET 10**, ASP.NET Core, Avalonia 11, SQLite, System.Xml.Linq, xUnit.
 
-Design notes: [`design/aether_forge/DESIGN.md`](design/aether_forge/DESIGN.md)
-
 ---
 
 ## Mod output
@@ -205,6 +203,8 @@ Research markdown under `aomr_extract/*.md` and synthetic fixtures are intended 
 
 ## License & game content
 
+This project is released under the [MIT License](LICENSE).
+
 This repository does **not** include official Age of Mythology content from Microsoft / World's Edge / Xbox Game Studios.
 
 You need a legal copy of AoM: Retold to:
@@ -234,8 +234,6 @@ CI: [`.github/workflows/ci.yml`](.github/workflows/ci.yml) (`dotnet test` on `wi
 | [`docs/SETUP.md`](docs/SETUP.md) | Setup & safe workflow |
 | [`docs/images/`](docs/images/) | Screenshots |
 | [`build/README.md`](build/README.md) | Release publish |
-| [`aomr_extract/`](aomr_extract/) | Research / mod guide (without `original/`) |
-| [`design/`](design/) | UI / product design |
 | [`fixtures/synthetic/`](fixtures/synthetic/) | Synthetic test data |
 
 ---
